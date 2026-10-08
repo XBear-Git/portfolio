@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>熊珅 - 个人作品集网站</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- 全局重置 ---------- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        html { scroll-behavior: smooth; }
+
+        /* ---------- 顶部章节导航 ---------- */
+        .site-nav {
+            position: sticky;
+            top: 10px;
+            z-index: 50;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 7px;
+            margin-bottom: 34px;
+            width: fit-content;
+            max-width: 100%;
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+        }
+        .site-nav a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4b5563;
+            text-decoration: none;
+            padding: 6px 15px;
+            border-radius: 999px;
+            white-space: nowrap;
+            transition: background 0.15s, color 0.15s;
+        }
+        .site-nav a:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        .site-nav a.active {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        /* 章节跳转时预留吸顶导航的高度 */
+        section[id] { scroll-margin-top: 78px; }
+
+        /* ---------- 头部（左侧姓名 + 与卡片对齐的信息 + 右侧头像） ---------- */
+        header {
+            position: relative;
+            min-height: 140px;
+            margin-bottom: 56px;
+        }
+        .header-left h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        /* 副标题与联系方式与下方卡片同宽、同左边界 */
+        .header-body {
+            max-width: 940px;
+            margin: 0 auto;
+            padding-right: 150px;
+        }
+        .header-left .subtitle {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        /* 头部信息区：邮箱/手机纯文本，GitHub/简历为链接 */
+        .header-info {
+            font-size: 0.96rem;
+            color: #4b5563;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 18px;
+        }
+        .header-info .info-item {
+            display: inline-flex;
+            align-items: center;
+        }
+        .header-info a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .header-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* 头像占位符（圆形）——向中间靠，与卡片右边界对齐 */
+        .header-right {
+            position: absolute;
+            top: 0;
+            right: max(0px, calc((100% - 940px) / 2));
+        }
+        .avatar-wrapper {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #d1d5db;
+        }
+        .avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .avatar-placeholder {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* ---------- 章节标题 ---------- */
+        section {
+            margin-bottom: 52px;
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        /* ---------- 关于我 ---------- */
+        .about-text {
+            color: #374151;
+            max-width: 940px;
+            margin: 0 auto;
+            font-size: 1rem;
+        }
+
+        /* ---------- 项目卡片（单列布局） ---------- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 44px;
+            max-width: 940px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            min-height: 190px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        /* ★ 动图居中显示，裁剪时左右对称 */
+        .project-card img {
+            width: 34%;
+            min-height: 190px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: #e5e7eb;
+        }
+
+        .project-content {
+            padding: 16px 22px;
+            width: 66%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .project-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .tag {
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 0.76rem;
+            padding: 2px 11px;
+            border-radius: 99px;
+            font-weight: 500;
+        }
+        .project-content p {
+            color: #4b5563;
+            font-size: 0.91rem;
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+        .card-links {
+            display: flex;
+            gap: 14px;
+        }
+        .card-links a {
+            font-size: 0.86rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .card-links a:hover { text-decoration: underline; }
+
+        /* ---------- 性能优化案例 ---------- */
+        .perf-case {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+        .perf-case-head {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #f8fafc;
+            padding: 24px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        .perf-case-head h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .perf-case-head .perf-desc {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            max-width: 500px;
+        }
+        .perf-case-head .tags { margin-top: 10px; margin-bottom: 0; }
+        .perf-case-head .tag {
+            background: rgba(255,255,255,0.14);
+            color: #e2e8f0;
+        }
+        .perf-hero {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .perf-hero .hero-label {
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+        .perf-hero .hero-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        .perf-hero .hero-value .hero-from { color: #94a3b8; }
+        .perf-hero .hero-value .hero-arrow { color: #64748b; margin: 0 6px; font-size: 1.2rem; }
+        .perf-hero .hero-value .hero-to { color: #4ade80; }
+        .perf-hero .hero-delta {
+            margin-top: 6px;
+            font-size: 0.82rem;
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        /* 关键指标卡 */
+        .perf-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .perf-metric {
+            background: #ffffff;
+            padding: 18px 14px;
+            text-align: center;
+        }
+        .perf-metric .m-label {
+            font-size: 0.78rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .perf-metric .m-values {
+            font-size: 0.92rem;
+            color: #9ca3af;
+        }
+        .perf-metric .m-values strong { color: #111827; font-size: 1.1rem; }
+        .perf-metric .m-delta {
+            margin-top: 7px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #16a34a;
+        }
+
+        .perf-body { padding: 22px 26px 26px; }
+        .perf-subtitle {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 14px;
+        }
+
+        /* 优化步骤时间线 */
+        .perf-steps { display: grid; gap: 14px; }
+        .perf-step { display: flex; gap: 13px; }
+        .perf-step .step-no {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .perf-step .step-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        .perf-step .step-gain {
+            color: #16a34a;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+        .perf-step p {
+            font-size: 0.84rem;
+            color: #6b7280;
+            line-height: 1.55;
+            margin-top: 3px;
+        }
+        .perf-step code {
+            background: #f3f4f6;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: #db2777;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        /* ---------- 数据图表 ---------- */
+        .perf-chart {
+            margin-top: 14px;
+            padding: 16px 20px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #fcfcfd;
+        }
+        .chart-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .chart-title { font-size: 0.86rem; font-weight: 600; color: #374151; }
+        .chart-note { font-size: 0.74rem; color: #9ca3af; }
+        .chart-legend { display: flex; gap: 16px; font-size: 0.76rem; color: #6b7280; }
+        .legend-item { display: inline-flex; align-items: center; gap: 5px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+        .legend-dot.before { background: #cbd5e1; }
+        .legend-dot.after { background: #2563eb; }
+
+        /* 柱状图公共 */
+        .chart-plot,
+        .group-chart {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 16px;
+            height: 168px;
+            padding: 22px 4px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .chart-col,
+        .chart-group {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 6px;
+        }
+        .chart-bar {
+            width: 100%;
+            max-width: 66px;
+            height: 0;                 /* 初始高度为 0，进入视口后动画到 --h */
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .chart-bar.grow { height: var(--h); }
+        .chart-group .chart-bar { max-width: 34px; }
+        .chart-bar .bar-val {
+            position: absolute;
+            top: -19px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #1e293b;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.35s;
+        }
+        .chart-bar.grow .bar-val { opacity: 1; }
+        .chart-bar.b-before { background: #cbd5e1; }
+        .chart-bar.b-after { background: linear-gradient(180deg, #3b82f6, #2563eb); }
+
+        /* 90 FPS 目标参考线 */
+        .chart-target {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-top: 1px dashed #f59e0b;
+            z-index: 2;
+        }
+        .chart-target span {
+            position: absolute;
+            left: 0;
+            top: -16px;
+            font-size: 0.68rem;
+            color: #d97706;
+            background: #fcfcfd;
+            padding: 0 4px;
+        }
+
+        /* 图表下方标签 */
+        .chart-x-labels,
+        .group-labels {
+            display: flex;
+            gap: 16px;
+            padding: 8px 4px 0;
+        }
+        .chart-x-labels > div,
+        .group-labels > div {
+            flex: 1;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #374151;
+            line-height: 1.35;
+        }
+        .chart-x-labels small,
+        .group-labels .g-delta {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #16a34a;
+            margin-top: 1px;
+        }
+        .chart-x-labels small { color: #9ca3af; font-weight: 400; }
+
+        /* 尊重系统“减少动态效果”设置 */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .chart-bar, .chart-bar .bar-val { transition: none; }
+        }
+
+        /* 折叠区：完整数据 / 更多截图 */
+        .perf-details { margin-top: 18px; }
+        .perf-details > summary {
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #2563eb;
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .perf-details > summary::-webkit-details-marker { display: none; }
+        .perf-details > summary::before {
+            content: "▸";
+            font-size: 0.7rem;
+            transition: transform 0.15s;
+        }
+        .perf-details[open] > summary::before { transform: rotate(90deg); }
+
+        .perf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.83rem;
+        }
+        .perf-table th, .perf-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .perf-table th:first-child, .perf-table td:first-child {
+            text-align: left;
+            color: #374151;
+        }
+        .perf-table thead th {
+            color: #6b7280;
+            font-weight: 600;
+            background: #f9fafb;
+        }
+        .perf-table td.good { color: #16a34a; font-weight: 600; }
+
+        .perf-links {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .perf-links a {
+            font-size: 0.86rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .perf-links a:hover { text-decoration: underline; }
+
+        /* ---------- 技能标签云 ---------- */
+        .skills-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .skill-item {
+            background: #f3f4f6;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.89rem;
+            color: #374151;
+        }
+
+        /* ---------- 教育/联系 ---------- */
+        .edu-info {
+            margin-bottom: 6px;
+        }
+        .contact-link {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .contact-link:hover { text-decoration: underline; }
+
+        /* ---------- 底部 ---------- */
+        footer {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.84rem;
+            margin-top: 80px;
+            padding-top: 28px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* ---------- PDF 弹窗 ---------- */
+        .pdf-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .pdf-modal[hidden] { display: none; }
+        .pdf-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+        .pdf-modal-panel {
+            position: relative;
+            width: min(920px, 100%);
+            height: min(88vh, 1040px);
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+        }
+        .pdf-modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .pdf-modal-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        .pdf-modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .pdf-modal-external {
+            font-size: 0.8rem;
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .pdf-modal-external:hover { text-decoration: underline; }
+        .pdf-modal-close {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 8px;
+            background: #f3f4f6;
+            color: #374151;
+            font-size: 0.9rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .pdf-modal-close:hover { background: #e5e7eb; }
+        .pdf-modal-body {
+            flex: 1;
+            background: #f3f4f6;
+        }
+        .pdf-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+        body.modal-open { overflow: hidden; }
+        @media (max-width: 550px) {
+            .pdf-modal { padding: 0; }
+            .pdf-modal-panel {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+        }
+
+        /* ---------- 移动端适配 ---------- */
+        @media (max-width: 850px) {
+            header {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+                min-height: 0;
+            }
+            .header-right {
+                position: static;
+                right: auto;
+            }
+            .header-body {
+                max-width: none;
+                margin: 0;
+                padding-right: 0;
+            }
+            .header-info {
+                justify-content: center;
+            }
+            .avatar-wrapper {
+                width: 105px;
+                height: 105px;
+            }
+            .header-left h1 {
+                font-size: 2.2rem;
+            }
+            .perf-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 550px) {
+            body { padding: 24px 16px; }
+            .site-nav {
+                width: 100%;
+                top: 6px;
+                border-radius: 16px;
+                justify-content: center;
+            }
+            .perf-case-head { padding: 20px; }
+            .perf-hero { text-align: left; }
+            .perf-body { padding: 18px; }
+            .perf-chart { padding: 14px 12px 12px; }
+            .chart-plot,
+            .group-chart { gap: 8px; height: 150px; }
+            .chart-bar { max-width: 42px; }
+            .chart-group .chart-bar { max-width: 22px; }
+            .chart-bar .bar-val { font-size: 0.68rem; }
+            .chart-x-labels,
+            .group-labels { gap: 8px; font-size: 0.7rem; }
+            .chart-x-labels > div,
+            .group-labels > div { font-size: 0.7rem; }
+            .perf-table { font-size: 0.76rem; }
+            .perf-table th, .perf-table td { padding: 6px 5px; }
+            .project-card {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .project-card img {
+                width: 100%;
+                min-height: 170px;
+            }
+            .project-content {
+                width: 100%;
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 顶部章节导航 ==================== -->
+    <nav class="site-nav">
+        <a href="#about">👋 关于我</a>
+        <a href="#perf">⚡ 性能优化</a>
+        <a href="#projects">🕹️ 项目作品</a>
+        <a href="#skills">⚙️ 技能</a>
+        <a href="#education">🎓 教育</a>
+    </nav>
+
+    <!-- ==================== 头部（左文右图） ==================== -->
+    <header>
+        <div class="header-left">
+            <h1>熊珅</h1>
+            <div class="header-body">
+                <p class="subtitle">游戏客户端开发 · 2027届本科</p>
+                <div class="header-info">
+                    <div class="info-item">📬 @qq.com</div>
+                    <div class="info-item">📱 </div>
+                    <div class="info-item">
+                        🐙 <a href="https://github.com/XBear-Git" target="_blank">我的Github主页</a>
+                    </div>
+                    <div class="info-item">
+                        📄 <a href="resume.pdf" class="js-pdf" data-pdf-title="简历 PDF" target="_blank" rel="noopener">简历 PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="avatar-wrapper">
+                <img src="images/avatar.png" alt="我的头像">
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== 关于我 ==================== -->
+    <section id="about">
+        <h2>👋 关于我</h2>
+        <p class="about-text">
+            湖北工业大学数字媒体技术专业27届应届生，熟悉 UE / C++，目前有 3 个独立完成的游戏 Demo、一个性能优化案例。<br>
+        </p>
+    </section>
+
+    <!-- ==================== 性能优化案例 ==================== -->
+    <section id="perf">
+        <h2>⚡ 性能优化案例</h2>
+        <div class="perf-case">
+
+            <div class="perf-case-head">
+                <div>
+                    <h3>个人游戏 Demo 静态场景性能优化</h3>
+                    <p class="perf-desc">
+                        针对自建 UE5 静态场景的一次完整性能优化：从数据量化定位 CPU 渲染提交瓶颈，
+                        到阴影、合批、光追三项优化落地，并逐项复测验证收益。
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Unreal Engine 5</span>
+                        <span class="tag">性能分析</span>
+                        <span class="tag">DrawCall 优化</span>
+                        <span class="tag">光照烘焙</span>
+                        <span class="tag">Lumen</span>
+                    </div>
+                </div>
+                <div class="perf-hero">
+                    <div class="hero-label">核心成果</div>
+                    <div class="hero-value">
+                        <span class="hero-from">79</span>
+                        <span class="hero-arrow">→</span>
+                        <span class="hero-to">108</span>
+                    </div>
+                    <div class="hero-delta">FPS ↑ 36.7%</div>
+                </div>
+            </div>
+
+            <!-- 关键指标 -->
+            <div class="perf-metrics">
+                <div class="perf-metric">
+                    <div class="m-label">帧率 FPS</div>
+                    <div class="m-values">79 → <strong>108</strong></div>
+                    <div class="m-delta">↑ 36.7%</div>
+                </div>
+                <div class="perf-metric">
+                    <div class="m-label">Draw 耗时</div>
+                    <div class="m-values">12.83 → <strong>9.33</strong> ms</div>
+                    <div class="m-delta">↓ 27.3%</div>
+                </div>
+                <div class="perf-metric">
+                    <div class="m-label">Draws 绘制调用</div>
+                    <div class="m-values">436 → <strong>198</strong></div>
+                    <div class="m-delta">↓ 54.6%</div>
+                </div>
+                <div class="perf-metric">
+                    <div class="m-label">RHIT 渲染线程</div>
+                    <div class="m-values">6.73 → <strong>3.91</strong> ms</div>
+                    <div class="m-delta">↓ 41.9%</div>
+                </div>
+            </div>
+
+            <div class="perf-body">
+
+                <!-- 优化过程 -->
+                <div class="perf-subtitle">优化过程</div>
+                <div class="perf-steps">
+                    <div class="perf-step">
+                        <div class="step-no">1</div>
+                        <div>
+                            <div class="step-title">基线量化与瓶颈定位</div>
+                            <p>
+                                用 <code>stat unit</code> / Stat SceneRendering / Stat InitViews 逐层下钻，
+                                确认瓶颈在 CPU 渲染提交侧：Draw 12.83ms ≈ Frame，而 GPU 仅 6.07ms，
+                                且静态网格元素仅 6 个，合批严重不足。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="perf-step">
+                        <div class="step-no">2</div>
+                        <div>
+                            <div class="step-title">选择性阴影 + 光照烘焙<span class="step-gain">Draws ↓ 47.2%</span></div>
+                            <p>
+                                Directional Light 改 Stationary，Dynamic Shadow Distance 40000→8000、级联 4→2；
+                                小物件关闭 Cast Shadow，大件烘焙阴影并放置 Lightmass Importance Volume。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="perf-step">
+                        <div class="step-no">3</div>
+                        <div>
+                            <div class="step-title">静态网格规范合批<span class="step-gain">图元数 ↓ 64.1%</span></div>
+                            <p>
+                                按「同网格 + 同材质」筛选纯净子集分批生成 ISM/HISM（单批＜200），
+                                包围盒过大者再按区块拆分，兼顾视锥剔除，避免“全进全出”导致的剔除失效。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="perf-step">
+                        <div class="step-no">4</div>
+                        <div>
+                            <div class="step-title">关闭 Lumen 硬件光追<span class="step-gain">RHIT ↓ 41.9%</span></div>
+                            <p>
+                                Stationary 烘焙已能提供优质间接光，关闭硬件光追改用软件追踪，
+                                渲染线程绑定压力显著缓解，画质影响极小，帧率再提升约 14%。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 实测数据（图表） -->
+                <div class="perf-subtitle" style="margin-top: 24px;">实测数据</div>
+
+                <!-- 分阶段帧率提升 -->
+                <div class="perf-chart">
+                    <div class="chart-head">
+                        <span class="chart-title">分阶段帧率提升</span>
+                        <span class="chart-note">橙色虚线为 90 FPS 目标</span>
+                    </div>
+                    <div class="chart-plot">
+                        <div class="chart-target" style="bottom: 82.7%;"><span>90 FPS</span></div>
+                        <div class="chart-col">
+                            <div class="chart-bar b-before" style="--h: 72.6%;"><span class="bar-val">79.0</span></div>
+                        </div>
+                        <div class="chart-col">
+                            <div class="chart-bar b-after" style="--h: 81.4%;"><span class="bar-val">88.5</span></div>
+                        </div>
+                        <div class="chart-col">
+                            <div class="chart-bar b-after" style="--h: 87.5%;"><span class="bar-val">95.1</span></div>
+                        </div>
+                        <div class="chart-col">
+                            <div class="chart-bar b-after" style="--h: 100%;"><span class="bar-val">108.8</span></div>
+                        </div>
+                    </div>
+                    <div class="chart-x-labels">
+                        <div>基线<small>优化前</small></div>
+                        <div>阴影优化<small>+12.1%</small></div>
+                        <div>静态合批<small>+7.5%</small></div>
+                        <div>关闭硬件光追<small>+14.3%</small></div>
+                    </div>
+                </div>
+
+                <!-- 优化前后关键指标 -->
+                <div class="perf-chart">
+                    <div class="chart-head">
+                        <span class="chart-title">优化前后关键指标</span>
+                        <span class="chart-legend">
+                            <span class="legend-item"><i class="legend-dot before"></i>优化前</span>
+                            <span class="legend-item"><i class="legend-dot after"></i>优化后</span>
+                        </span>
+                    </div>
+                    <div class="group-chart">
+                        <div class="chart-group">
+                            <div class="chart-bar b-before" style="--h: 73%;"><span class="bar-val">79</span></div>
+                            <div class="chart-bar b-after" style="--h: 100%;"><span class="bar-val">108</span></div>
+                        </div>
+                        <div class="chart-group">
+                            <div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">12.83</span></div>
+                            <div class="chart-bar b-after" style="--h: 73%;"><span class="bar-val">9.33</span></div>
+                        </div>
+                        <div class="chart-group">
+                            <div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">436</span></div>
+                            <div class="chart-bar b-after" style="--h: 45%;"><span class="bar-val">198</span></div>
+                        </div>
+                        <div class="chart-group">
+                            <div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">6.73</span></div>
+                            <div class="chart-bar b-after" style="--h: 58%;"><span class="bar-val">3.91</span></div>
+                        </div>
+                    </div>
+                    <div class="group-labels">
+                        <div>帧率 FPS<span class="g-delta">↑ 36.7%</span></div>
+                        <div>Draw 耗时<span class="g-delta">↓ 27.3%</span></div>
+                        <div>Draws 调用<span class="g-delta">↓ 54.6%</span></div>
+                        <div>RHIT (ms)<span class="g-delta">↓ 41.9%</span></div>
+                    </div>
+                </div>
+
+                <!-- 完整数据 -->
+                <details class="perf-details">
+                    <summary>查看完整前后对比数据</summary>
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>指标</th>
+                                <th>优化前</th>
+                                <th>优化后</th>
+                                <th>提升幅度</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>帧率 FPS</td><td>79</td><td>108</td><td class="good">+36.7%</td></tr>
+                            <tr><td>Frame 帧时间 (ms)</td><td>12.84</td><td>9.19</td><td class="good">-28.4%</td></tr>
+                            <tr><td>Draw 耗时 (ms)</td><td>12.83</td><td>9.33</td><td class="good">-27.3%</td></tr>
+                            <tr><td>RHIT (ms)</td><td>6.73</td><td>3.91</td><td class="good">-41.9%</td></tr>
+                            <tr><td>GPU Time (ms)</td><td>6.07</td><td>4.84</td><td class="good">-20.3%</td></tr>
+                            <tr><td>Draws 总绘制调用</td><td>436</td><td>198</td><td class="good">-54.6%</td></tr>
+                            <tr><td>DrawPrimitive Calls</td><td>537.2</td><td>258.13</td><td class="good">-51.9%</td></tr>
+                            <tr><td>Triangles Drawn</td><td>101K</td><td>55.6K</td><td class="good">-44.9%</td></tr>
+                            <tr><td>Processed Primitives</td><td>2485</td><td>891</td><td class="good">-64.1%</td></tr>
+                            <tr><td>Visible Raytracing Primitives</td><td>1912</td><td>610</td><td class="good">-68.1%</td></tr>
+                        </tbody>
+                    </table>
+                </details>
+
+                <div class="perf-links">
+                    <a href="docs/performance-optimization.pdf" class="js-pdf" data-pdf-title="性能优化记录" target="_blank" rel="noopener">📄 完整性能优化记录（PDF）</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 项目作品 ==================== -->
+    <section id="projects">
+        <h2>🕹️ 项目作品</h2>
+        <div class="projects-grid">
+
+            <!-- 项目卡片 1 — NetworkSync Demo -->
+            <div class="project-card">
+                <img src="images/project1.gif" alt="NetworkSync Demo" loading="lazy">
+                <div class="project-content">
+                    <h3>NetworkSync Demo</h3>
+                    <div class="tags">
+                        <span class="tag">Unreal Engine</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">网络同步</span>
+                    </div>
+                    <p>
+                        基于 UE5.7 的局域网多人网络同步 Demo，Listen Server 拓扑支持 2~4 人联机。<br>
+                        实现服务端权威技能系统、属性复制、头顶血条、死亡重生、技能冷却及命中特效多播。
+                    </p>
+                    <div class="card-links">
+                        <a href="https://github.com/XBear-Git/UE-NetSync-Demo" target="_blank">🔗 GitHub</a>
+                        <a href="https://www.bilibili.com/video/BV1RWa36MEmf/?spm_id_from=333.1387.upload.video_card.click&vd_source=54a3fe0864b012961aa26ec2aaa60e0f" target="_blank">▶️ 演示视频</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目卡片 2 — HotPakDemo -->
+            <div class="project-card">
+                <img src="images/project2.gif" alt="HotPakDemo" loading="lazy">
+                <div class="project-content">
+                    <h3>HotPakDemo 资源热更新框架</h3>
+                    <div class="tags">
+                        <span class="tag">Unreal Engine</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">资源热更</span>
+                    </div>
+                    <p>
+                        基于 UE5.7 传统 Pak 路线的资源热更新 Demo。<br>
+                        自研 Python 管线做文件级 SHA256 diff 并调用 UnrealPak 生成增量补丁；<br>
+                        客户端实现状态机编排（检测→下载→校验→挂载→生效），C++ Slate 更新面板，启动重挂载与挂载失败自动回滚，覆盖断网/包损坏/磁盘不足等异常。
+                    </p>
+                    <div class="card-links">
+                        <a href="https://github.com/XBear-Git/UE-HotPak-Demo" target="_blank">🔗 GitHub</a>
+                        <a href="https://www.bilibili.com/video/BV1kwHC6jEtJ/?vd_source=54a3fe0864b012961aa26ec2aaa60e0f" target="_blank">▶️ 演示视频</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ★ 项目卡片 3 — 自创解谜游戏《祀孽》 -->
+            <div class="project-card">
+                <img src="images/project3.gif" alt="自创解谜游戏" loading="lazy">
+                <div class="project-content">
+                    <h3>自创解谜游戏《祀孽》</h3>
+                    <div class="tags">
+                        <span class="tag">UE</span>
+                        <span class="tag">UMG</span>
+                        <span class="tag">STL</span>
+                        <span class="tag">Nigara</span>
+                        <span class="tag">Material</span>
+                        <span class="tag">Gameplay</span>
+                        <span class="tag">Blueprint</span>
+                    </div>
+                    <p>
+                        围绕四大核心系统落地玩法设计：<br>
+                        • 交互与检视：结构化基类 + 射线检测 + 事件驱动，响应准确率 100%；<br>
+                        • 背包管理：三层分类（固有/流程/剧情）+ 数据表配置 + 逻辑与表现分离；<br>
+                        • 传送系统：TMap 键值对管理，激活/灰度状态，支持无限传送点；<br>
+                        • 场景音效：物理材质识别 + 射线检测，动态播放脚步声，提升沉浸感。
+                    </p>
+                    <div class="card-links">
+                        <a href="#" target="_blank">🔗 GitHub</a>
+                        <a href="https://www.bilibili.com/video/BV1g8osBFEGW/?vd_source=54a3fe0864b012961aa26ec2aaa60e0f" target="_blank">▶️ 演示视频</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== 技能 ==================== -->
+    <section id="skills">
+        <h2>⚙️ 技能</h2>
+        <div class="skills-cloud">
+            <span class="skill-item">UE</span>
+            <span class="skill-item">C++</span>
+            <span class="skill-item">Git</span>
+            <span class="skill-item">UMG</span>
+            <span class="skill-item">UE Blueprint</span>
+            <span class="skill-item">Photoshop</span>
+            <span class="skill-item">Vibe Coding</span>
+        </div>
+    </section>
+
+    <!-- ==================== 教育 & 联系方式 ==================== -->
+    <section id="education">
+        <h2>🎓 教育</h2>
+        <p class="edu-info"><strong>湖北工业大学</strong> · 数字媒体技术 · 本科 · 2023–2027</p>
+        <p style="color:#6b7280; margin-bottom: 16px;"> 英语 CET-6 | 校级优秀大学生 | 绩点排名 4/42</p>
+    </section>
+
+    <!-- ==================== 底部 ==================== -->
+    <footer>
+        © 2026 熊珅 · 使用 GitHub Pages 托管 · 模板自建
+    </footer>
+
+    <!-- ==================== PDF 弹窗 ==================== -->
+    <div class="pdf-modal" id="pdfModal" hidden>
+        <div class="pdf-modal-backdrop" data-pdf-close></div>
+        <div class="pdf-modal-panel" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+            <div class="pdf-modal-head">
+                <span class="pdf-modal-title" id="pdfModalTitle">PDF</span>
+                <div class="pdf-modal-actions">
+                    <a class="pdf-modal-external" id="pdfModalExternal" href="#" target="_blank" rel="noopener">在新标签打开 ↗</a>
+                    <button type="button" class="pdf-modal-close" data-pdf-close aria-label="关闭">✕</button>
+                </div>
+            </div>
+            <div class="pdf-modal-body">
+                <iframe id="pdfModalFrame" title="PDF 预览" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 无 JS 时直接显示柱体（不做生长动画） -->
+    <noscript>
+        <style>
+            .chart-bar { height: var(--h) !important; }
+            .chart-bar .bar-val { opacity: 1 !important; }
+        </style>
+    </noscript>
+
+    <script>
+        (function () {
+            var reduceMotion = window.matchMedia &&
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* 1. 柱状图进入视口时依次生长 */
+            var charts = document.querySelectorAll('.perf-chart');
+
+            function grow(chart, stagger) {
+                var bars = chart.querySelectorAll('.chart-bar');
+                Array.prototype.forEach.call(bars, function (bar, i) {
+                    bar.style.transitionDelay = (stagger && !reduceMotion ? i * 70 : 0) + 'ms';
+                    bar.classList.add('grow');
+                });
+            }
+
+            if (reduceMotion || !('IntersectionObserver' in window)) {
+                Array.prototype.forEach.call(charts, function (c) { grow(c, false); });
+            } else {
+                var chartObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            grow(entry.target, true);
+                            chartObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+                Array.prototype.forEach.call(charts, function (c) { chartObserver.observe(c); });
+            }
+
+            /* 2. 顶部导航高亮当前所在章节 */
+            var navLinks = document.querySelectorAll('.site-nav a');
+            var sections = document.querySelectorAll('section[id]');
+
+            function highlight(id) {
+                Array.prototype.forEach.call(navLinks, function (link) {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+                });
+            }
+
+            if ('IntersectionObserver' in window) {
+                var sectionObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) highlight(entry.target.id);
+                    });
+                }, { rootMargin: '-45% 0px -50% 0px' });
+                Array.prototype.forEach.call(sections, function (s) { sectionObserver.observe(s); });
+            }
+
+            /* 3. PDF 弹窗预览 */
+            var pdfModal = document.getElementById('pdfModal');
+            if (pdfModal) {
+                var pdfFrame = document.getElementById('pdfModalFrame');
+                var pdfTitle = document.getElementById('pdfModalTitle');
+                var pdfExternal = document.getElementById('pdfModalExternal');
+                var pdfLastFocus = null;
+
+                var openPdf = function (url, title) {
+                    pdfLastFocus = document.activeElement;
+                    pdfTitle.textContent = title || 'PDF 预览';
+                    pdfExternal.setAttribute('href', url);
+                    pdfFrame.setAttribute('src', url);
+                    pdfModal.hidden = false;
+                    document.body.classList.add('modal-open');
+                    var btn = pdfModal.querySelector('.pdf-modal-close');
+                    if (btn) btn.focus();
+                };
+
+                var closePdf = function () {
+                    pdfModal.hidden = true;
+                    document.body.classList.remove('modal-open');
+                    pdfFrame.setAttribute('src', 'about:blank');
+                    if (pdfLastFocus && pdfLastFocus.focus) pdfLastFocus.focus();
+                };
+
+                Array.prototype.forEach.call(document.querySelectorAll('a.js-pdf'), function (link) {
+                    link.addEventListener('click', function (e) {
+                        /* 用修饰键 / 中键点击时保留原生“新标签打开”行为 */
+                        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                        e.preventDefault();
+                        openPdf(link.getAttribute('href'), link.getAttribute('data-pdf-title'));
+                    });
+                });
+
+                Array.prototype.forEach.call(pdfModal.querySelectorAll('[data-pdf-close]'), function (el) {
+                    el.addEventListener('click', closePdf);
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && !pdfModal.hidden) closePdf();
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
