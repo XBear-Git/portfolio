@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="preload" as="image" href="assets/img/hero/hero-1.jpg" fetchpriority="high">
 </head>
 <body id="top">
 
@@ -33,7 +34,7 @@
         </div>
 
         <div class="hero-inner">
-            <img class="hero-avatar" src="assets/img/avatar.jpg" alt="熊珅的头像">
+            <img class="hero-avatar" src="assets/img/avatar.jpg" alt="熊珅的头像" width="512" height="512" fetchpriority="high" decoding="async">
             <h1>熊珅</h1>
             <p class="tagline">UE 客户端开发 · UI 开发</p>
 
@@ -68,7 +69,7 @@
 
                 <div class="about-grid">
                     <aside class="profile-card">
-                        <img src="assets/img/avatar.jpg" alt="熊珅">
+                        <img src="assets/img/avatar.jpg" alt="熊珅" width="512" height="512" loading="lazy" decoding="async">
                         <div class="profile-name">熊珅</div>
                         <div class="profile-role">UE 客户端开发 · UI 开发</div>
 
