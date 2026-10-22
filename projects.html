@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目作品 · 熊珅</title>
+    <meta name="description" content="熊珅的项目作品：UE / 游戏客户端方向与 UI 开发方向的项目及性能优化案例。">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-projects">
+
+    <!-- ==================== 顶部导航（双 Tab） ==================== -->
+    <nav class="nav" id="siteNav">
+        <a class="brand" href="index.html">熊珅<span>.</span></a>
+        <div class="nav-links">
+            <button type="button" data-tab="game" class="is-active">客户端项目作品</button>
+            <button type="button" data-tab="ui">UI 项目作品</button>
+            <a class="nav-cta" href="index.html">主页</a>
+        </div>
+    </nav>
+
+    <!-- ==================== 页头 ==================== -->
+    <header class="projects-head">
+        <div class="wrap--wide">
+            <div>
+                <span class="eyebrow">PORTFOLIO</span>
+                <h1 data-panel-title>客户端项目作品</h1>
+                <p data-panel-desc>UE / 客户端方向：网络同步、资源热更、渲染性能优化与 Gameplay。</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ============================================================
+             Panel · 客户端作品
+             ============================================================ -->
+        <div class="panel is-active" data-panel="game" id="panel-game" role="tabpanel" aria-label="客户端项目作品">
+            <div class="cards">
+
+                <!-- NetworkSync -->
+                <article class="card">
+                    <div class="card-media">
+                        <img src="assets/img/client/project1.gif" alt="NetworkSync Demo 演示">
+                    </div>
+                    <div class="card-body">
+                        <div class="kicker">网络同步 · UE5</div>
+                        <h3>NetworkSync Demo</h3>
+                        <div class="tags">
+                            <span class="tag">Unreal Engine</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">网络同步</span>
+                        </div>
+                        <ul class="points">
+                            <li>基于 UE5.7 的局域网多人网络同步 Demo，Listen Server 拓扑支持 2~4 人联机。</li>
+                            <li>实现服务端权威技能系统、属性复制、头顶血条、死亡重生、技能冷却及命中特效多播。</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://github.com/XBear-Git/UE-NetSync-Demo" target="_blank" rel="noopener">GitHub</a>
+                            <a href="https://www.bilibili.com/video/BV1RWa36MEmf/" target="_blank" rel="noopener">演示视频</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 祀孽 -->
+                <article class="card">
+                    <div class="card-media">
+                        <img src="assets/img/client/project3.gif" alt="原创解谜项目《祀孽》演示">
+                    </div>
+                    <div class="card-body">
+                        <div class="kicker">Gameplay · 交互系统</div>
+                        <h3>原创解谜项目《祀孽》</h3>
+                        <div class="tags">
+                            <span class="tag">UE</span>
+                            <span class="tag">UMG</span>
+                            <span class="tag">STL</span>
+                            <span class="tag">Niagara</span>
+                            <span class="tag">Material</span>
+                            <span class="tag">Gameplay</span>
+                            <span class="tag">Blueprint</span>
+                        </div>
+                        <ul class="points">
+                            <li><strong>交互与检视：</strong>结构化基类 + 射线检测 + 事件驱动，响应准确率 100%。</li>
+                            <li><strong>背包管理：</strong>三层分类（固有 / 流程 / 剧情）+ 数据表配置 + 逻辑与表现分离。</li>
+                            <li><strong>传送系统：</strong>TMap 键值对管理，激活 / 灰度状态，支持无限传送点。</li>
+                            <li><strong>场景音效：</strong>物理材质识别 + 射线检测，动态播放脚步声，提升沉浸感。</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://www.bilibili.com/video/BV1g8osBFEGW/" target="_blank" rel="noopener">演示视频</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- HotPak -->
+                <article class="card">
+                    <div class="card-media">
+                        <img src="assets/img/client/project2.gif" alt="HotPakDemo 资源热更新演示">
+                    </div>
+                    <div class="card-body">
+                        <div class="kicker">资源管线 · 热更新</div>
+                        <h3>HotPakDemo 资源热更新框架</h3>
+                        <div class="tags">
+                            <span class="tag">Unreal Engine</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">资源热更</span>
+                        </div>
+                        <ul class="points">
+                            <li>基于 UE5.7 传统 Pak 路线；自研 Python 管线做文件级 SHA256 diff，并调用 UnrealPak 生成增量补丁。</li>
+                            <li>客户端状态机编排（检测 → 下载 → 校验 → 挂载 → 生效），C++ Slate 更新面板。</li>
+                            <li>启动重挂载与挂载失败自动回滚，覆盖断网 / 包损坏 / 磁盘不足等异常。</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://github.com/XBear-Git/UE-HotPak-Demo" target="_blank" rel="noopener">GitHub</a>
+                            <a href="https://www.bilibili.com/video/BV1kwHC6jEtJ/" target="_blank" rel="noopener">演示视频</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 性能优化案例（客户端版） -->
+                <section class="perf-case" aria-labelledby="perf-game-title">
+                    <div class="perf-case-head">
+                        <div>
+                            <h3 id="perf-game-title">个人 Demo 静态场景性能优化</h3>
+                            <p class="perf-desc">针对自建 UE5 静态场景的一次完整性能优化：从 stat 数据定位 CPU 渲染提交瓶颈，到阴影、合批、光追三项优化落地，并逐项复测验证收益。</p>
+                            <div class="tags">
+                                <span class="tag">Unreal Engine 5</span>
+                                <span class="tag">性能分析</span>
+                                <span class="tag">DrawCall 优化</span>
+                                <span class="tag">光照烘焙</span>
+                                <span class="tag">Lumen</span>
+                            </div>
+                        </div>
+                        <div class="perf-hero">
+                            <div class="hero-label">核心成果</div>
+                            <div class="hero-value"><span class="hero-from">79</span><span class="hero-arrow">→</span><span class="hero-to">108</span></div>
+                            <div class="hero-delta">FPS ↑ 36.7%</div>
+                        </div>
+                    </div>
+
+                    <div class="perf-metrics">
+                        <div class="perf-metric"><div class="m-label">帧率 FPS</div><div class="m-values">79 → <strong>108</strong></div><div class="m-delta">↑ 36.7%</div></div>
+                        <div class="perf-metric"><div class="m-label">Draw 耗时</div><div class="m-values">12.83 → <strong>9.33</strong> ms</div><div class="m-delta">↓ 27.3%</div></div>
+                        <div class="perf-metric"><div class="m-label">Draws 绘制调用</div><div class="m-values">436 → <strong>198</strong></div><div class="m-delta">↓ 54.6%</div></div>
+                        <div class="perf-metric"><div class="m-label">RHIT 渲染线程</div><div class="m-values">6.73 → <strong>3.91</strong> ms</div><div class="m-delta">↓ 41.9%</div></div>
+                    </div>
+
+                    <div class="perf-body">
+                        <div class="perf-subtitle">优化过程</div>
+                        <div class="perf-steps">
+                            <div class="perf-step"><div class="step-no">1</div><div><div class="step-title">基线量化与瓶颈定位</div><p>用 <code>stat unit</code> / Stat SceneRendering / Stat InitViews 逐层下钻，确认瓶颈在 CPU 渲染提交侧：Draw 12.83ms ≈ Frame，而 GPU 仅 6.07ms。</p></div></div>
+                            <div class="perf-step"><div class="step-no">2</div><div><div class="step-title">选择性阴影 + 光照烘焙<span class="step-gain">Draws ↓ 47.2%</span></div><p>Directional Light 改 Stationary，Dynamic Shadow Distance 40000→8000、级联 4→2；小物件关闭 Cast Shadow，大件烘焙阴影并放置 Lightmass Importance Volume。</p></div></div>
+                            <div class="perf-step"><div class="step-no">3</div><div><div class="step-title">静态网格规范合批<span class="step-gain">图元数 ↓ 64.1%</span></div><p>按「同网格 + 同材质」筛选纯净子集分批生成 ISM/HISM（单批 &lt;200），包围盒过大者按区块拆分，兼顾视锥剔除。</p></div></div>
+                            <div class="perf-step"><div class="step-no">4</div><div><div class="step-title">关闭 Lumen 硬件光追<span class="step-gain">RHIT ↓ 41.9%</span></div><p>Stationary 烘焙已能提供优质间接光，关闭硬件光追改用软件追踪，渲染线程绑定压力显著缓解，帧率再提升约 14%。</p></div></div>
+                        </div>
+
+                        <div class="perf-subtitle" style="margin-top: 24px;">实测数据</div>
+
+                        <div class="perf-chart">
+                            <div class="chart-head"><span class="chart-title">分阶段帧率提升</span><span class="chart-note">橙色虚线为 90 FPS 目标</span></div>
+                            <div class="chart-plot">
+                                <div class="chart-target" style="bottom: 82.7%;"><span>90 FPS</span></div>
+                                <div class="chart-col"><div class="chart-bar b-before" style="--h: 72.6%;"><span class="bar-val">79.0</span></div></div>
+                                <div class="chart-col"><div class="chart-bar b-after" style="--h: 81.4%;"><span class="bar-val">88.5</span></div></div>
+                                <div class="chart-col"><div class="chart-bar b-after" style="--h: 87.5%;"><span class="bar-val">95.1</span></div></div>
+                                <div class="chart-col"><div class="chart-bar b-after" style="--h: 100%;"><span class="bar-val">108.8</span></div></div>
+                            </div>
+                            <div class="chart-x-labels">
+                                <div>基线<small>优化前</small></div>
+                                <div>阴影优化<small>+12.1%</small></div>
+                                <div>静态合批<small>+7.5%</small></div>
+                                <div>关闭硬件光追<small>+14.3%</small></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-chart">
+                            <div class="chart-head">
+                                <span class="chart-title">优化前后关键指标</span>
+                                <span class="chart-legend"><span class="legend-item"><i class="legend-dot before"></i>优化前</span><span class="legend-item"><i class="legend-dot after"></i>优化后</span></span>
+                            </div>
+                            <div class="group-chart">
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 73%;"><span class="bar-val">79</span></div><div class="chart-bar b-after" style="--h: 100%;"><span class="bar-val">108</span></div></div>
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">12.83</span></div><div class="chart-bar b-after" style="--h: 73%;"><span class="bar-val">9.33</span></div></div>
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">436</span></div><div class="chart-bar b-after" style="--h: 45%;"><span class="bar-val">198</span></div></div>
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">6.73</span></div><div class="chart-bar b-after" style="--h: 58%;"><span class="bar-val">3.91</span></div></div>
+                            </div>
+                            <div class="group-labels">
+                                <div>帧率 FPS<span class="g-delta">↑ 36.7%</span></div>
+                                <div>Draw 耗时<span class="g-delta">↓ 27.3%</span></div>
+                                <div>Draws 调用<span class="g-delta">↓ 54.6%</span></div>
+                                <div>RHIT (ms)<span class="g-delta">↓ 41.9%</span></div>
+                            </div>
+                        </div>
+
+                        <details class="perf-details">
+                            <summary>查看完整前后对比数据</summary>
+                            <table class="perf-table">
+                                <thead><tr><th>指标</th><th>优化前</th><th>优化后</th><th>提升幅度</th></tr></thead>
+                                <tbody>
+                                    <tr><td>帧率 FPS</td><td>79</td><td>108</td><td class="good">+36.7%</td></tr>
+                                    <tr><td>Frame 帧时间 (ms)</td><td>12.84</td><td>9.19</td><td class="good">-28.4%</td></tr>
+                                    <tr><td>Draw 耗时 (ms)</td><td>12.83</td><td>9.33</td><td class="good">-27.3%</td></tr>
+                                    <tr><td>RHIT (ms)</td><td>6.73</td><td>3.91</td><td class="good">-41.9%</td></tr>
+                                    <tr><td>GPU Time (ms)</td><td>6.07</td><td>4.84</td><td class="good">-20.3%</td></tr>
+                                    <tr><td>Draws 总绘制调用</td><td>436</td><td>198</td><td class="good">-54.6%</td></tr>
+                                    <tr><td>DrawPrimitive Calls</td><td>537.2</td><td>258.13</td><td class="good">-51.9%</td></tr>
+                                    <tr><td>Triangles Drawn</td><td>101K</td><td>55.6K</td><td class="good">-44.9%</td></tr>
+                                    <tr><td>Processed Primitives</td><td>2485</td><td>891</td><td class="good">-64.1%</td></tr>
+                                    <tr><td>Visible Raytracing Primitives</td><td>1912</td><td>610</td><td class="good">-68.1%</td></tr>
+                                </tbody>
+                            </table>
+                        </details>
+
+                        <div class="perf-links">
+                            <a href="docs/performance-optimization.pdf" class="js-pdf" data-pdf-title="性能优化记录" target="_blank" rel="noopener">📄 完整性能优化记录（PDF）</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="panel-skills">
+                <h3>相关技能</h3>
+                <div class="skill-chips">
+                    <span class="skill-chip">C++ / Slate</span>
+                    <span class="skill-chip">网络同步</span>
+                    <span class="skill-chip">服务端权威</span>
+                    <span class="skill-chip">资源热更（Pak）</span>
+                    <span class="skill-chip">渲染性能优化</span>
+                    <span class="skill-chip">工具链</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             Panel · UI 作品
+             ============================================================ -->
+        <div class="panel" data-panel="ui" id="panel-ui" role="tabpanel" aria-label="UI 项目作品">
+            <div class="cards">
+
+                <!-- 考试界面 -->
+                <article class="card">
+                    <div class="card-media is-contain" data-carousel>
+                        <div class="carousel">
+                            <div class="carousel-track">
+                                <img class="carousel-slide" src="assets/img/ui/ui-exam-1.jpg" alt="考试答题界面：题目导航、选项与提交按钮">
+                                <img class="carousel-slide" src="assets/img/ui/ui-exam-2.jpg" alt="考试结果界面：分数、正确题数与答题分析">
+                                <img class="carousel-slide" src="assets/img/ui/ui-exam-3.jpg" alt="JSON 题库到 UMG 数据绑定的结构示意">
+                            </div>
+                            <div class="carousel-dots">
+                                <button class="carousel-dot is-active" type="button" aria-label="第 1 张：答题界面"></button>
+                                <button class="carousel-dot" type="button" aria-label="第 2 张：结果界面"></button>
+                                <button class="carousel-dot" type="button" aria-label="第 3 张：数据绑定示意"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="kicker">实习项目</div>
+                        <h3>VR / PC 考试界面系统</h3>
+                        <div class="tags">
+                            <span class="tag">UE5</span><span class="tag">UMG</span><span class="tag">C++</span><span class="tag">JSON</span><span class="tag">事件分发</span>
+                        </div>
+                        <ul class="points">
+                            <li><strong>数据驱动：</strong>从 JSON 文件读取题库 → C++ 结构体 → UMG 数据绑定，换题 / 加题型不改 UI 逻辑。</li>
+                            <li><strong>多层级页面：</strong>用页面切换与叠加容器组织登录、答题、交卷、结果，状态机统一管理流程。</li>
+                            <li><strong>解耦与适配：</strong>事件分发 + 锚点 / DPI 缩放，修复 UI 状态丢失、引用拷贝等 10+ 问题。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 背包 UI -->
+                <article class="card">
+                    <div class="card-media is-contain" data-carousel>
+                        <div class="carousel">
+                            <div class="carousel-track">
+                                <img class="carousel-slide" src="assets/img/ui/ui-bag-1.jpg" alt="背包主界面：分类页签、物品网格与详情面板">
+                                <img class="carousel-slide" src="assets/img/ui/ui-bag-2.jpg" alt="背包中的检视界面效果">
+                                <img class="carousel-slide" src="assets/img/ui/ui-bag-3.jpg" alt="阅读界面的效果">
+                            </div>
+                            <div class="carousel-dots">
+                                <button class="carousel-dot is-active" type="button" aria-label="第 1 张：背包主界面"></button>
+                                <button class="carousel-dot" type="button" aria-label="第 2 张：检视界面"></button>
+                                <button class="carousel-dot" type="button" aria-label="第 3 张：阅读界面"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="kicker">自研解谜项目</div>
+                        <h3>背包与物品 UI 系统</h3>
+                        <div class="tags">
+                            <span class="tag">UE5</span><span class="tag">UMG</span><span class="tag">蓝图</span><span class="tag">数据表</span><span class="tag">输入状态</span>
+                        </div>
+                        <ul class="points">
+                            <li><strong>数据驱动分类：</strong>用 DataTable 与 Struct 管理关键物品、线索文档和可使用物品，按类型维护三个分类数组；新增物品只改数据表。</li>
+                            <li><strong>动态槽位与详情：</strong>WidgetSwitcher + WrapBox 组织三类物品，刷新时动态生成槽位、隐藏空槽；悬停刷新详情，左键弹出菜单。</li>
+                            <li><strong>3D 检视与输入闭环：</strong>场景捕获 → 渲染纹理 → UI 材质显示模型，支持旋转 / 缩放 / 复位；四态输入管理，Tab 开关背包。</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://www.bilibili.com/video/BV1YRnH6qExg/" target="_blank" rel="noopener">演示视频</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Common UI -->
+                <article class="card">
+                    <div class="card-media is-contain" data-carousel>
+                        <div class="carousel">
+                            <div class="carousel-track">
+                                <img class="carousel-slide" src="assets/img/ui/ui-common-1.jpg" alt="Common UI 的 Game、Menu、Modal 三层结构与输入路由">
+                                <img class="carousel-slide" src="assets/img/ui/ui-common-2.jpg" alt="模态弹窗、输入屏蔽与焦点恢复示意">
+                                <img class="carousel-slide" src="assets/img/ui/ui-common-3.jpg" alt="Common UI 样式表、按钮与文本样式复用">
+                            </div>
+                            <div class="carousel-dots">
+                                <button class="carousel-dot is-active" type="button" aria-label="第 1 张：分层与输入路由"></button>
+                                <button class="carousel-dot" type="button" aria-label="第 2 张：模态弹窗与焦点"></button>
+                                <button class="carousel-dot" type="button" aria-label="第 3 张：样式与组件复用"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="kicker">UI 框架专项</div>
+                        <h3>Common UI 前端菜单框架</h3>
+                        <div class="tags">
+                            <span class="tag">Common UI</span><span class="tag">C++</span><span class="tag">Widget Stack</span><span class="tag">数据驱动</span><span class="tag">异步加载</span>
+                        </div>
+                        <ul class="points">
+                            <li><strong>分层 UI 框架：</strong>用 Gameplay Tag 映射界面与 Widget Stack，结合软引用与异步加载按需创建页面；C++ 统一处理入栈 / 出栈、弹窗与焦点。</li>
+                            <li><strong>数据驱动选项：</strong>设置项由数据对象与注册表配置，页签、列表与详情联动；属性读写代理绑定用户设置，新增选项只需登记数据。</li>
+                            <li><strong>通用组件与主链路：</strong>以 C++ 基类封装按钮、页签、列表与轮播控件；打通启动 → 主菜单 → 选项 → 退出确认流程。</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://github.com/XBear-Git/MenuSystem-CommonUI" target="_blank" rel="noopener">GitHub</a>
+                            <a href="#" class="is-todo" title="演示视频待补充" aria-disabled="true">演示视频</a>
+                            <span class="card-note">框架已建好，设置应用逻辑待完善</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 性能优化案例（UI 版） -->
+                <section class="perf-case" aria-labelledby="perf-ui-title">
+                    <div class="perf-case-head">
+                        <div>
+                            <h3 id="perf-ui-title">静态场景性能优化 · UI 视角</h3>
+                            <p class="perf-desc">从 stat 数据定位 CPU 渲染提交瓶颈，到阴影、合批、光追三项优化落地并复测。案例中的 Draw Call / 合批 / 层级分析，同样适用于 UMG 图集与 UI 性能排查。</p>
+                            <div class="tags">
+                                <span class="tag">Unreal Engine 5</span>
+                                <span class="tag">DrawCall / 合批</span>
+                                <span class="tag">图集</span>
+                                <span class="tag">UI 性能排查</span>
+                            </div>
+                        </div>
+                        <div class="perf-hero">
+                            <div class="hero-label">核心成果</div>
+                            <div class="hero-value"><span class="hero-from">79</span><span class="hero-arrow">→</span><span class="hero-to">108</span></div>
+                            <div class="hero-delta">FPS ↑ 36.7%</div>
+                        </div>
+                    </div>
+
+                    <div class="perf-metrics">
+                        <div class="perf-metric"><div class="m-label">帧率 FPS</div><div class="m-values">79 → <strong>108</strong></div><div class="m-delta">↑ 36.7%</div></div>
+                        <div class="perf-metric"><div class="m-label">Draw 耗时</div><div class="m-values">12.83 → <strong>9.33</strong> ms</div><div class="m-delta">↓ 27.3%</div></div>
+                        <div class="perf-metric"><div class="m-label">Draws 绘制调用</div><div class="m-values">436 → <strong>198</strong></div><div class="m-delta">↓ 54.6%</div></div>
+                        <div class="perf-metric"><div class="m-label">RHIT 渲染线程</div><div class="m-values">6.73 → <strong>3.91</strong> ms</div><div class="m-delta">↓ 41.9%</div></div>
+                    </div>
+
+                    <div class="perf-body">
+                        <div class="perf-subtitle">优化过程</div>
+                        <div class="perf-steps">
+                            <div class="perf-step"><div class="step-no">1</div><div><div class="step-title">基线量化与瓶颈定位</div><p>用 <code>stat unit</code> / Stat SceneRendering / Stat InitViews 逐层下钻，确认瓶颈在 CPU 渲染提交侧：Draw 12.83ms ≈ Frame，而 GPU 仅 6.07ms。</p></div></div>
+                            <div class="perf-step"><div class="step-no">2</div><div><div class="step-title">选择性阴影 + 光照烘焙<span class="step-gain">Draws ↓ 47.2%</span></div><p>Directional Light 改 Stationary，Dynamic Shadow Distance 40000→8000、级联 4→2；小物件关闭 Cast Shadow，大件烘焙阴影并放置 Lightmass Importance Volume。</p></div></div>
+                            <div class="perf-step"><div class="step-no">3</div><div><div class="step-title">静态网格规范合批<span class="step-gain">图元数 ↓ 64.1%</span></div><p>按「同网格 + 同材质」筛选纯净子集分批生成 ISM/HISM（单批 &lt;200），包围盒过大者按区块拆分，兼顾视锥剔除。</p></div></div>
+                            <div class="perf-step"><div class="step-no">4</div><div><div class="step-title">关闭 Lumen 硬件光追<span class="step-gain">RHIT ↓ 41.9%</span></div><p>Stationary 烘焙已能提供优质间接光，关闭硬件光追改用软件追踪，渲染线程绑定压力显著缓解，帧率再提升约 14%。</p></div></div>
+                        </div>
+
+                        <div class="perf-subtitle" style="margin-top: 24px;">实测数据</div>
+
+                        <div class="perf-chart">
+                            <div class="chart-head"><span class="chart-title">分阶段帧率提升</span><span class="chart-note">橙色虚线为 90 FPS 目标</span></div>
+                            <div class="chart-plot">
+                                <div class="chart-target" style="bottom: 82.7%;"><span>90 FPS</span></div>
+                                <div class="chart-col"><div class="chart-bar b-before" style="--h: 72.6%;"><span class="bar-val">79.0</span></div></div>
+                                <div class="chart-col"><div class="chart-bar b-after" style="--h: 81.4%;"><span class="bar-val">88.5</span></div></div>
+                                <div class="chart-col"><div class="chart-bar b-after" style="--h: 87.5%;"><span class="bar-val">95.1</span></div></div>
+                                <div class="chart-col"><div class="chart-bar b-after" style="--h: 100%;"><span class="bar-val">108.8</span></div></div>
+                            </div>
+                            <div class="chart-x-labels">
+                                <div>基线<small>优化前</small></div>
+                                <div>阴影优化<small>+12.1%</small></div>
+                                <div>静态合批<small>+7.5%</small></div>
+                                <div>关闭硬件光追<small>+14.3%</small></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-chart">
+                            <div class="chart-head">
+                                <span class="chart-title">优化前后关键指标</span>
+                                <span class="chart-legend"><span class="legend-item"><i class="legend-dot before"></i>优化前</span><span class="legend-item"><i class="legend-dot after"></i>优化后</span></span>
+                            </div>
+                            <div class="group-chart">
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 73%;"><span class="bar-val">79</span></div><div class="chart-bar b-after" style="--h: 100%;"><span class="bar-val">108</span></div></div>
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">12.83</span></div><div class="chart-bar b-after" style="--h: 73%;"><span class="bar-val">9.33</span></div></div>
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">436</span></div><div class="chart-bar b-after" style="--h: 45%;"><span class="bar-val">198</span></div></div>
+                                <div class="chart-group"><div class="chart-bar b-before" style="--h: 100%;"><span class="bar-val">6.73</span></div><div class="chart-bar b-after" style="--h: 58%;"><span class="bar-val">3.91</span></div></div>
+                            </div>
+                            <div class="group-labels">
+                                <div>帧率 FPS<span class="g-delta">↑ 36.7%</span></div>
+                                <div>Draw 耗时<span class="g-delta">↓ 27.3%</span></div>
+                                <div>Draws 调用<span class="g-delta">↓ 54.6%</span></div>
+                                <div>RHIT (ms)<span class="g-delta">↓ 41.9%</span></div>
+                            </div>
+                        </div>
+
+                        <details class="perf-details">
+                            <summary>查看完整前后对比数据</summary>
+                            <table class="perf-table">
+                                <thead><tr><th>指标</th><th>优化前</th><th>优化后</th><th>提升幅度</th></tr></thead>
+                                <tbody>
+                                    <tr><td>帧率 FPS</td><td>79</td><td>108</td><td class="good">+36.7%</td></tr>
+                                    <tr><td>Frame 帧时间 (ms)</td><td>12.84</td><td>9.19</td><td class="good">-28.4%</td></tr>
+                                    <tr><td>Draw 耗时 (ms)</td><td>12.83</td><td>9.33</td><td class="good">-27.3%</td></tr>
+                                    <tr><td>RHIT (ms)</td><td>6.73</td><td>3.91</td><td class="good">-41.9%</td></tr>
+                                    <tr><td>GPU Time (ms)</td><td>6.07</td><td>4.84</td><td class="good">-20.3%</td></tr>
+                                    <tr><td>Draws 总绘制调用</td><td>436</td><td>198</td><td class="good">-54.6%</td></tr>
+                                    <tr><td>DrawPrimitive Calls</td><td>537.2</td><td>258.13</td><td class="good">-51.9%</td></tr>
+                                    <tr><td>Triangles Drawn</td><td>101K</td><td>55.6K</td><td class="good">-44.9%</td></tr>
+                                    <tr><td>Processed Primitives</td><td>2485</td><td>891</td><td class="good">-64.1%</td></tr>
+                                    <tr><td>Visible Raytracing Primitives</td><td>1912</td><td>610</td><td class="good">-68.1%</td></tr>
+                                </tbody>
+                            </table>
+                        </details>
+
+                        <div class="perf-links">
+                            <a href="docs/performance-optimization.pdf" class="js-pdf" data-pdf-title="性能优化记录" target="_blank" rel="noopener">📄 完整性能优化记录（PDF）</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="panel-skills">
+                <h3>相关技能</h3>
+                <div class="skill-chips">
+                    <span class="skill-chip">UMG / Common UI</span>
+                    <span class="skill-chip">图集 Atlas</span>
+                    <span class="skill-chip">Draw Call / Overdraw</span>
+                    <span class="skill-chip">Widget Stack</span>
+                    <span class="skill-chip">数据绑定</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap--wide">
+            <div>© 2026 熊珅 · 项目作品</div>
+            <div class="footer-links">
+                <a href="index.html">主页</a>
+                <a href="https://github.com/XBear-Git" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:XiongShen_dev@163.com">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== PDF 弹窗 ==================== -->
+    <div class="pdf-modal" id="pdfModal" hidden>
+        <div class="pdf-modal-backdrop" data-pdf-close></div>
+        <div class="pdf-modal-panel" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+            <div class="pdf-modal-head">
+                <span class="pdf-modal-title" id="pdfModalTitle">PDF</span>
+                <div class="pdf-modal-actions">
+                    <a class="pdf-modal-external" id="pdfModalExternal" href="#" target="_blank" rel="noopener">在新标签打开 ↗</a>
+                    <button type="button" class="pdf-modal-close" data-pdf-close aria-label="关闭">✕</button>
+                </div>
+            </div>
+            <div class="pdf-modal-body">
+                <iframe id="pdfModalFrame" title="PDF 预览" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <noscript>
+        <style>
+            .chart-bar { height: var(--h) !important; }
+            .chart-bar .bar-val { opacity: 1 !important; }
+            .panel { display: block; }
+        </style>
+    </noscript>
+
+    <script src="assets/site.js"></script>
+</body>
+</html>
